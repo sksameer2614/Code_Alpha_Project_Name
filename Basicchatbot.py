@@ -1,6 +1,13 @@
 import random
 import re
 
+# Define colors for different types of messages
+class Color:
+    USER = '\033[94m'  # Blue
+    CHATBOT = '\033[92m'  # Green
+    POSITIVE = '\033[93m'  # Yellow
+    DEFAULT = '\033[0m'  # Reset to default color
+
 # Define responses and positive responses for the chatbot
 responses = {
     "name": {
@@ -24,7 +31,7 @@ responses = {
     },
     "hobbies": {
         "responses": [
-            "I dont have hobbies! i am always here to caht and learn,What do you enjoy doing in your free time?",
+            "I dont have hobbies! i am always here to chat and learn,What do you enjoy doing in your free time?",
             "As a virtual Assistant,my main hobby is helping you! How do you usually spend your leisure time?",
         ],
         "positive_responses": [
@@ -106,29 +113,29 @@ def get_response(message):
     if keyword_match:
         keyword = next(iter(keyword_match))  # Get the first keyword found
         if any(word in message.lower() for word in ["what", "your"]):
-            return random.choice(responses[keyword]["responses"])
+            return Color.CHATBOT + random.choice(responses[keyword]["responses"]) + Color.DEFAULT
         else:
-            return random.choice(responses[keyword]["positive_responses"])
+            return Color.POSITIVE + random.choice(responses[keyword]["positive_responses"]) + Color.DEFAULT
     # If no keyword is found, provide a default response
     else:
         default_responses = [
             "Good! Thanks for reaching out.",
             "Hello! I'm here to assist you."
         ]
-        return random.choice(default_responses)
+        return Color.CHATBOT + random.choice(default_responses) + Color.DEFAULT
 
 # Main function to handle the conversation
 def chat_with_user():
     print("Welcome to the chatbot!")
     while True:
-        user_input = input("You: ")
+        user_input = input(Color.USER + "You: " + Color.DEFAULT)
         if user_input.lower() in ["bye", "quit", "exit"]:
-            print("Chatbot: Thank you for reaching out.")
+            print(Color.CHATBOT + "Chatbot: Thank you for reaching out." + Color.DEFAULT)
             print("\n------------------------------------")
             print("\n------------------------------------")
             break
         response = get_response(user_input)
-        print("Chatbot:", response)
+        print(Color.CHATBOT + "Chatbot:", response + Color.DEFAULT)
 
 # Start the conversation
 if __name__ == "__main__":
