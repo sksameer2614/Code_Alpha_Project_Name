@@ -1,5 +1,4 @@
 import random
-
 def select_word():
     words = [
         ("python", "a programming language"),
