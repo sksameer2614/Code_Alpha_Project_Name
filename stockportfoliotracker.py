@@ -1,5 +1,6 @@
 import sqlite3
 from colorama import init, Fore, Style
+
 # Initialize colorama
 init(autoreset=True)
 
